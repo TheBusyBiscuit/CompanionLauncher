@@ -12,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -70,12 +69,8 @@ public class LauncherUI {
 		if (!new File(path + "\\common\\categories").exists()) new File(path + "\\common\\categories").mkdirs();
 		
 		System.out.println("Loading Assets...");
-		
-		try {
-			new AssetsLoader().load();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+
+		new AssetsLoader().load();
 		
 		System.out.println("Loading 'config.json'...");
 		config = new Config();

@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class AssetsLoader {
 	
-	public void load() throws IOException, URISyntaxException {
+	public void load() throws IOException {
 		loadImage("disk");
 		loadImage("edit");
 		loadImage("games");
