@@ -31,7 +31,13 @@ public class DirectoryRenderer extends DefaultTableCellRenderer {
 
 		label.setIcon(img);
 		
-		label.setText(LauncherUI.config.json.get("directories").getAsJsonArray().size() + " Steam Libraries registered.");
+		int n = LauncherUI.config.json.get("directories").getAsJsonArray().size();
+		if (n == 1) {
+			label.setText(n + " Steam Library registered.");
+		}
+		else {
+			label.setText(n + " Steam Libraries registered.");
+		}
 		label.setHorizontalTextPosition(SwingConstants.LEFT);
 		
 		return label;
