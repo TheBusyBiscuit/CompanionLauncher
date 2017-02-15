@@ -15,6 +15,11 @@ Search for games by their Name, features or developers.
 Or sort them for their disk size, price, name or features as well.
 ![Search](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/master/images/Search.png)
 
+# Requirements
+
+To use this Application, you should be using the Steam Client for your Operating System.
+To compile the source code of this Application, [Gson by Google](https://github.com/google/gson) is required.
+
 # Disclaimer
 
 I am not affiliated with Steam or Valve in any way.
