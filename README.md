@@ -26,3 +26,5 @@ I am not affiliated with Steam or Valve in any way.
 This Application does not ask you for your login information nor does it collect them in any way.
 This Application scans your Steam Libary and connects to the Steam Web API, all data collected
 by this is stored on your PC only, no data is sent to a Server.
+This Project is open-source.
+You are welcome to fork and contribute to this Project as much as you want.
