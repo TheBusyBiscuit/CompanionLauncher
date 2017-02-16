@@ -2,21 +2,14 @@ package io.github.TheBusyBiscuit.CompanionLauncher;
 
 import java.awt.AWTException;
 import java.awt.Color;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
@@ -144,102 +137,7 @@ public class LauncherUI {
 		else {
 			System.out.println("Launching System Tray...");
 
-	        icon = new TrayIcon(new ImageIcon(path + "\\common\\icon.png").getImage());
-	        icon.setImageAutoSize(true);
-	        
-	        PopupMenu popup = new PopupMenu();
-	        
-	        MenuItem toggle = new MenuItem("Show / Hide");
-	        toggle.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (games.isVisible()) {
-						games.setVisible(false);
-					}
-					else if (settings.isVisible()) {
-						settings.setVisible(false);
-					}
-					else {
-						games.setVisible(true);
-					}
-				}
-			});
-	        
-	        MenuItem lib = new MenuItem("Library");
-	        lib.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					games.setVisible(true);
-					settings.setVisible(false);
-				}
-			});
-	        
-	        MenuItem options = new MenuItem("Settings");
-	        options.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					games.setVisible(false);
-					settings.setVisible(true);
-				}
-			});
-	        
-	        MenuItem about = new MenuItem("About");
-	        about.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(games, "Version: " + AppInfo.version + "\nAuthor(s): " + AppInfo.authors + "\n\nhttps://github.com/TheBusyBiscuit/" + AppInfo.name, "About", JOptionPane.INFORMATION_MESSAGE);
-				}
-			});
-	        
-	        MenuItem restart = new MenuItem("Restart");
-	        restart.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					restart();
-				}
-			});
-	        
-	        MenuItem exit = new MenuItem("Exit");
-	        exit.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.exit(0);
-				}
-			});
-
-	        popup.add(toggle);
-	        popup.add(lib);
-	        popup.add(options);
-	        popup.add(about);
-	        popup.add(restart);
-	        popup.add(exit);
-	        
-	        icon.setPopupMenu(popup);
-	        
-	        icon.addMouseListener(new MouseAdapter() {
-	        	
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					if (e.getButton() == 1) {
-						if (games.isVisible()) {
-							games.setVisible(false);
-						}
-						else if (settings.isVisible()) {
-							settings.setVisible(false);
-						}
-						else {
-							games.setVisible(true);
-						}
-					}
-				}
-				
-			});
+	        icon = new LauncherTray();
 	         
 	        try {
 	        	SystemTray.getSystemTray().add(icon);
