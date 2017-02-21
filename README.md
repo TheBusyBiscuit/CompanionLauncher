@@ -2,6 +2,8 @@
 
 This Application is an assistant for users of the 'Steam Client'. It presents you with an easy-to-use Overview of all your Games.
 
+[Download (.jar)](https://github.com/TheBusyBiscuit/CompanionLauncher/releases)
+
 # Screenshots
 
 Browse your games in a fresh and easy-to-use GUI.
