@@ -245,6 +245,7 @@ public class SteamWindow extends JFrame {
 		
 		int maxCategories = 0;
 		for (int id: sorted) {
+			System.out.println(" Indexing '" + id + "'");
 			JsonObject callback = games.get(id).callback;
 			JsonObject manifest = games.get(id).manifest;
 			
@@ -287,18 +288,21 @@ public class SteamWindow extends JFrame {
 				cells[3] = price;
 				
 				Map<Integer, String> categories = new HashMap<Integer, String>();
-				JsonArray array = root.get("categories").getAsJsonArray();
 				
 				String tooltip = null;
 				
-				for (JsonElement element: array) {
-					JsonObject category = element.getAsJsonObject();
-					int cId = category.get("id").getAsInt();
-					String cName = category.get("description").getAsString();
+				if (root.has("categories")) {
+					JsonArray array = root.get("categories").getAsJsonArray();
 					
-					File file = new File(System.getenv("APPDATA") + "\\." + AppInfo.name + "\\common\\categories\\" + cId + ".png");
-					if (file.exists()) {
-						categories.put(cId, cName);
+					for (JsonElement element: array) {
+						JsonObject category = element.getAsJsonObject();
+						int cId = category.get("id").getAsInt();
+						String cName = category.get("description").getAsString();
+						
+						File file = new File(System.getenv("APPDATA") + "\\." + AppInfo.name + "\\common\\categories\\" + cId + ".png");
+						if (file.exists()) {
+							categories.put(cId, cName);
+						}
 					}
 				}
 				
