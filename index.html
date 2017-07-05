@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>window.$ = window.jQuery = require('jquery');</script>
+		<script src="js/front-end/WebPage.min.js"></script>
+
+		<link rel="stylesheet" href="css/main.min.css"/>
+	</head>
+	<body>
+		<!-- Table Header (Sorting) -->
+		<div id="topline" class="container_sorting game_object" style="height: 32px !important;">
+			<div class="game_component">
+				<p class="sorting_cell sorting_thumbnail game_cell"></p>
+			</div>
+			<div class="game_component game_info_column">
+				<p class="sorting_cell sorting_name game_cell"></p>
+			</div>
+			<div class="game_component game_info_column">
+				<p class="sorting_cell sorting_features game_cell"></p>
+			</div>
+			<div class="game_component game_info_column game_price">
+				<p class="sorting_cell sorting_price game_cell"></p>
+			</div>
+			<div class="game_component game_info_column game_size">
+				<p class="sorting_cell sorting_size game_cell"></p>
+			</div>
+		</div>
+		<div class="space" style="width: 100%; height: 26px !important;"></div>
+
+		<!-- Main Container (Games) -->
+		<div id="list" class="container_games">
+
+		</div>
+		
+		<div class="space" style="width: 100%; height: 26px !important;"></div>
+
+		<!-- Summary Bar -->
+		<div id="bottomline" class="container_summary game_object" style="height: 32px !important;">
+			<div class="game_component">
+				<p class="summary_cell summary_games game_cell"></p>
+			</div>
+			<div class="game_component game_info_column">
+			</div>
+			<div class="game_component game_info_column">
+			</div>
+			<div class="game_component game_info_column game_price">
+				<p class="summary_cell summary_price game_cell"></p>
+			</div>
+			<div class="game_component game_info_column game_size">
+				<p class="summary_cell summary_size game_cell"></p>
+			</div>
+		</div>
+	</body>
+</html>
