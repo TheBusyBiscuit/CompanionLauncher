@@ -7,6 +7,7 @@
     "column_price": "Preis",
     "column_size": "Speicherbelegung",
     "summary_games": "%X Spiele installiert",
+    "price_none": "Kostenlos",
     "features": {
         "1": "Mehrspieler",
         "2": "Einzelspieler",
