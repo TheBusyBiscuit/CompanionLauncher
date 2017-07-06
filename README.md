@@ -8,14 +8,14 @@ This Application is an assistant for users of the 'Steam Client'. It presents yo
 
 Browse your games in a fresh and easy-to-use GUI.
 
-![Games Library](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/master/images/Library.png)
+![Games Library](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/Java/images/Library.png)
 
 Customize every Setting of the Launcher (including its colors)
-![Settings Screen](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/master/images/Settings.png)
+![Settings Screen](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/Java/images/Settings.png)
 
 Search for games by their Name, features or developers.
 Or sort them for their disk size, price, name or features as well.
-![Search](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/master/images/Search.png)
+![Search](https://raw.githubusercontent.com/TheBusyBiscuit/CompanionLauncher/Java/images/Search.png)
 
 # Requirements
 
