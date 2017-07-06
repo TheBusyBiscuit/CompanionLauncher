@@ -2,3 +2,4 @@
 *.bat
 *.min.*
 JAFileMinifier.blacklist
+atom.exe.lnk
