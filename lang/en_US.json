@@ -1,0 +1,29 @@
+{
+    "code": "en_US",
+    "name": "English (US)",
+    "column_icon": "Icon",
+    "column_name": "Name",
+    "column_features": "Features",
+    "column_price": "Price",
+    "column_size": "Size on Disk",
+    "summary_games": "%X Games installed",
+    "features": {
+        "1": "Multiplayer",
+        "2": "Singleplayer",
+        "8": "Valve Anti-Cheat",
+        "9": "Co-op",
+        "13": "Subtitles",
+        "14": "Commentary",
+        "15": "Stats",
+        "17": "Level-Editor",
+        "18": "Partial Gamepad Support",
+        "22": "Achievements",
+        "23": "Steam Cloud",
+        "28": "Full Gamepad Support",
+        "29": "Steam Trading Cards",
+        "30": "Steam Workshop",
+        "35": "Ingame Transactions",
+        "36": "Online Multiplayer",
+        "38": "Online Co-op"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "code": "de_DE",
+    "name": "Deutsch / German",
+    "column_icon": "Icon",
+    "column_name": "Name",
+    "column_features": "Features",
+    "column_price": "Preis",
+    "column_size": "Speicherbelegung",
+    "summary_games": "%X Spiele installiert",
+    "features": {
+        "1": "Mehrspieler",
+        "2": "Einzelspieler",
+        "8": "Valve Anti-Cheat",
+        "9": "Ko-op",
+        "13": "Untertitel",
+        "14": "Audiokommentar",
+        "15": "Statistiken",
+        "17": "Level-Editor",
+        "18": "Teilweise Controllerunterstützung",
+        "22": "Errungenschaften",
+        "23": "Steam Cloud",
+        "28": "Volle Controllerunterstützung",
+        "29": "Steam Tauschkarten",
+        "30": "Steam Workshop",
+        "35": "Ingame-Transaktionen",
+        "36": "Online-Mehrspieler",
+        "38": "Online Ko-op"
+    }
+}
