@@ -1,0 +1,18 @@
+{
+  "name": "CompanionLauncher",
+  "version": "2.0.0",
+  "description": "",
+  "repository": "https://github.com/TheBusyBiscuit/CompanionLauncher",
+  "main": "js/back-end/main.min.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "TheBusyBiscuit",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.6.11"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
