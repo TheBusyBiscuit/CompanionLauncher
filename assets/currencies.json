@@ -1,0 +1,164 @@
+{
+    "USD": {
+        "name": "United States Dollar",
+        "cc": "us",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "EUR": {
+        "name": "Euro",
+        "cc": "de",
+        "rate": 100,
+        "char": "&#8364"
+    },
+    "JPY": {
+        "name": "Japanese Yen",
+        "cc": "jp",
+        "rate": 100,
+        "char": "&#165"
+    },
+    "GBP": {
+        "name": "Pound Sterling",
+        "cc": "gb",
+        "rate": 100,
+        "char": "&#163"
+    },
+    "CAD": {
+        "name": "Canadian Dollar",
+        "cc": "ca",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "NZD": {
+        "name": "New Zealand Dollar",
+        "cc": "nz",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "CHF": {
+        "name": "Swiss Franc",
+        "cc": "ch",
+        "rate": 100,
+        "char": "Fr"
+    },
+    "AED": {
+        "name": "United Arabic Emirates Dirham",
+        "cc": "ae",
+        "rate": 100,
+        "char": "&#1583&#46&#1573"
+    },
+    "AED": {
+        "name": "Brazilian Real",
+        "cc": "br",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "CLP": {
+        "name": "Chilean Peso",
+        "cc": "cl",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "CNY": {
+        "name": "Chinese Yuan",
+        "cc": "cn",
+        "rate": 100,
+        "char": "&#165"
+    },
+    "COP": {
+        "name": "Columbian Peso",
+        "cc": "co",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "HKD": {
+        "name": "Hong Kong Dollar",
+        "cc": "hk",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "INR": {
+        "name": "Indian Rupee",
+        "cc": "in",
+        "rate": 100,
+        "char": "&#8377"
+    },
+    "KRW": {
+        "name": "Korean Won",
+        "cc": "kr",
+        "rate": 100,
+        "char": "&#8361"
+    },
+    "MXN": {
+        "name": "Mexican Peso",
+        "cc": "mx",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "MYR": {
+        "name": "Malaysian Ringgit",
+        "cc": "my",
+        "rate": 100,
+        "char": "RM"
+    },
+    "NOK": {
+        "name": "Norwegian Krone",
+        "cc": "no",
+        "rate": 100,
+        "char": "kr"
+    },
+    "PEN": {
+        "name": "Peruvian Sol",
+        "cc": "pe",
+        "rate": 100,
+        "char": "S/."
+    },
+    "PHP": {
+        "name": "Philippine Peso",
+        "cc": "ph",
+        "rate": 100,
+        "char": "&#8369"
+    },
+    "RUB": {
+        "name": "Russian Ruble",
+        "cc": "ru",
+        "rate": 100,
+        "char": "&#8381"
+    },
+    "SAR": {
+        "name": "Saudi Arabian Riyal",
+        "cc": "sa",
+        "rate": 100,
+        "char": "&#65020"
+    },
+    "SGD": {
+        "name": "Singapore Dollar",
+        "cc": "sg",
+        "rate": 100,
+        "char": "&#36"
+    },
+    "THB": {
+        "name": "Thai Baht",
+        "cc": "th",
+        "rate": 100,
+        "char": "&#3647"
+    },
+    "TRY": {
+        "name": "Turkish Lira",
+        "cc": "tr",
+        "rate": 100,
+        "char": "&#8378"
+    },
+    "TWD": {
+        "name": "New Taiwan Dollar",
+        "cc": "tw",
+        "rate": 100,
+        "char": "#36"
+    },
+    "ZAR": {
+        "name": "South African Rand",
+        "cc": "za",
+        "rate": 100,
+        "char": "Rs"
+    }
+}

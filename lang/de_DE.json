@@ -8,6 +8,7 @@
     "column_size": "Speicherbelegung",
     "summary_games": "%X Spiele installiert",
     "price_none": "Kostenlos",
+    "button_play": "Starten",
     "features": {
         "1": "Mehrspieler",
         "2": "Einzelspieler",

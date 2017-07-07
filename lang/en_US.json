@@ -8,6 +8,7 @@
     "column_size": "Size on Disk",
     "summary_games": "%X Games installed",
     "price_none": "Free",
+    "button_play": "Play",
     "features": {
         "1": "Multiplayer",
         "2": "Singleplayer",

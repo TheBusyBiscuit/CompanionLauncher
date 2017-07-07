@@ -1,0 +1,70 @@
+{
+    "1": {
+        "name": "Multiplayer",
+        "char": "&#127760"
+    },
+    "2": {
+        "name": "Singleplayer",
+        "char": "&#128100"
+    },
+    "8": {
+        "name": "Valve Anti-Cheat",
+        "char": "&#128274"
+    },
+    "9": {
+        "name": "Co-op",
+        "char": "&#128111"
+    },
+    "13": {
+        "name": "Subtitles",
+        "char": "&#128209"
+    },
+    "14": {
+        "name": "Commentary",
+        "char": "&#128265"
+    },
+    "15": {
+        "name": "Stats",
+        "char": "&#128202"
+    },
+    "17": {
+        "name": "Level-Editor",
+        "char": "&#128296"
+    },
+    "18": {
+        "name": "Partial Gamepad Support",
+        "char": "(&#127918)"
+    },
+    "22": {
+        "name": "Achievements",
+        "char": "&#127942"
+    },
+    "23": {
+        "name": "Steam Cloud",
+        "char": "&#9925"
+    },
+    "28": {
+        "name": "Full Gamepad Support",
+        "char": "&#127918"
+    },
+    "29": {
+        "name": "Steam Trading Cards",
+        "char": "&#127183"
+    },
+    "30": {
+        "name": "Steam Workshop",
+        "char": "&#128295"
+    },
+    "35": {
+        "name": "Ingame Transactions",
+        "char": "&#128176"
+    },
+    "36": {
+        "name": "Online Multi-Player",
+        "char": "&#127759"
+    },
+    "38": {
+        "name": "Online Co-op",
+        "char": "&#127917"
+    }
+}
