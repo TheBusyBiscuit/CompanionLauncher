@@ -202,8 +202,8 @@ function formatFeatures(game, json, callback) {
 
         if (global.features[element]) {
             array.push(element);
-            if (str == '') str = '<span title="' + global.locals[global.config.lang].features[element] + '" class="features_icon feature_' + element + '">' + global.features[element].char + '</span>';
-            else str += ' ' + '<span title="' + global.locals[global.config.lang].features[element] + '" class="features_icon feature_' + element + '">' + global.features[element].char + '</span>';
+            if (str == '') str = '<span class="features_icon feature_' + element + '">' + global.features[element].char + '</span>';
+            else str += ' ' + '<span class="features_icon feature_' + element + '">' + global.features[element].char + '</span>';
 
             count++;
         }
