@@ -13,6 +13,8 @@ var config = remote.getGlobal('config');
 const locals = remote.getGlobal('locals');
 const currencies = remote.getGlobal('currencies');
 
+var color_picker_key;
+
 ipcRenderer.on('update_game', function(event, list, game, status) {
     log(status + ' ' + game.id);
     games = list;
@@ -46,9 +48,16 @@ ipcRenderer.on('update_lang', function(event, code) {
     updateHeader();
 });
 
+ipcRenderer.on('openColorPicker', function(event, key) {
+    color_picker_key = key;
+    $('#ColorPicker')[0].click();
+});
+
 $(function() {
     log('Loading...');
-    insertCSS();
+
+    $("head").append('<style type="text/css"></style>');
+    updateCSS();
 
     for (var i = 0; i < games.length; i++) {
         var game = games[i];
@@ -315,8 +324,7 @@ function addSorter(type) {
     })
 }
 
-function insertCSS() {
-    $("head").append('<style type="text/css"></style>')
+function updateCSS() {
     var css = $("head").children(":last");
     css.html('' +
         '.game_thumbnail { width: ' + thumbnail_size.width + 'px !important; }' +

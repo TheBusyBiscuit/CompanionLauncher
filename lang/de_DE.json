@@ -27,5 +27,23 @@
         "35": "Ingame-Transaktionen",
         "36": "Online-Mehrspieler",
         "38": "Online Ko-op"
+    },
+    "menu": {
+        "general": {
+            "title": "Allgemein",
+            "about": "Ueber",
+            "bugs": "Fehlermeldung",
+            "translations": "Hilf uns bei der Uebersetzung!",
+            "source": "Source Code"
+        },
+        "settings": {
+            "title": "Einstellungen",
+            "language": "Sprache",
+            "currency": "Waehrung"
+        },
+        "tray": {
+            "showHide": "Zeigen / Verbergen",
+            "quit": "Beenden"
+        }
     }
 }

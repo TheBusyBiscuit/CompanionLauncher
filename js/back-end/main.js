@@ -9,11 +9,13 @@ const url = require('url');
 const FileSystem = require('fs');
 const LibraryReader = require('./LibraryReader.min.js');
 const MenuBar = require('./MenuBar.min.js');
+const TrayIcon = require('./TrayIcon.min.js');
+const PreInstall = require('./PreInstall.min.js');
 
 var libraries = ["E:/Software/Steam/steamapps"];
 
 var window;
-var stage = 0, stages = 4;
+var stage = 0, stages = 6;
 
 app.on('ready', function() {
     window = new BrowserWindow({
@@ -24,6 +26,7 @@ app.on('ready', function() {
         title: 'CompanionLauncher v2.0'
     });
 
+    PreInstall.update(bake);
     loadConfig();
     loadLocals();
     loadResources();
@@ -43,10 +46,8 @@ function bake() {
             slashes: true
         }));
 
-        var menu = MenuBar.build(window);
-
-        Menu.setApplicationMenu(menu);
-        window.setMenu(menu);
+        TrayIcon.init();
+        global.updateUI();
 
         LibraryReader.setWindow(window);
         LibraryReader.loadSteamLibraries(libraries);
@@ -62,10 +63,6 @@ function bake() {
         }, 30000);
     }
 }
-
-app.on('window-all-closed', function() {
-  app.quit()
-})
 
 function loadConfig() {
     var path = app.getPath("userData") + "/config.json";
@@ -130,6 +127,16 @@ function loadResources() {
             log(err);
         }
     });
+
+    FileSystem.readFile("./LICENSE", 'UTF-8', function(err, data) {
+        if (!err) {
+            global.license = data;
+            bake(); // 4
+        }
+        else {
+            log(err);
+        }
+    });
 }
 
 function loadLocals() {
@@ -145,7 +152,7 @@ function loadLocals() {
                         if (!err) {
                             var json = JSON.parse(data);
                             global.locals[json.code] = json;
-                            bake() // 4+n
+                            bake() // 5+n
                         }
                         else {
                             log(err);
@@ -154,7 +161,7 @@ function loadLocals() {
                 }
             }
 
-            bake(); // 4
+            bake(); // 5
         }
         else {
             log(err);
@@ -181,4 +188,13 @@ function log(message) {
 
 global.log = function(thread, message) {
     console.log(' (' + thread + '): ' + message);
+}
+
+global.updateUI = function() {
+    TrayIcon.build(window);
+
+    var menu = MenuBar.build(window);
+
+    Menu.setApplicationMenu(menu);
+    window.setMenu(menu);
 }

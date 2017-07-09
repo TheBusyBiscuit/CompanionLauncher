@@ -27,5 +27,23 @@
         "35": "Ingame Transactions",
         "36": "Online Multiplayer",
         "38": "Online Co-op"
+    },
+    "menu": {
+        "general": {
+            "title": "General",
+            "about": "About",
+            "bugs": "Bug Tracker",
+            "translations": "Help us translate!",
+            "source": "Source Code"
+        },
+        "settings": {
+            "title": "Settings",
+            "language": "Language",
+            "currency": "Currency"
+        },
+        "tray": {
+            "showHide": "Show / Hide",
+            "quit": "Exit"
+        }
     }
 }
