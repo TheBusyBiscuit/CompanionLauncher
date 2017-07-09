@@ -1,0 +1,348 @@
+const remote = require('electron').remote;
+const ipcRenderer = require('electron').ipcRenderer;
+const FileSystem = require('fs');
+
+const thumbnail_size = {
+    width: (420 * 9 / 20).toFixed(0),
+    height: (215 * 9 / 20).toFixed(0)
+};
+
+var games = remote.getGlobal('games');
+var config = remote.getGlobal('config');
+
+const locals = remote.getGlobal('locals');
+const currencies = remote.getGlobal('currencies');
+
+ipcRenderer.on('update_game', function(event, list, game, status) {
+    log(status + ' ' + game.id);
+    games = list;
+
+    if (status == 'update') {
+        $("#game_id_" + game.id).replaceWith(dom(game));
+
+        updateSummaries();
+        sort();
+    }
+    else if (status == 'create') {
+        $(".container_games").append(dom(game));
+
+        updateSummaries();
+        sort();
+    }
+    else if (status == 'delete') {
+        $("#game_id_" + game.id).remove();
+
+        updateSummaries();
+    }
+});
+
+ipcRenderer.on('update_lang', function(event, code) {
+    config.lang = code;
+
+    $('.summary_games').html('&#127918 ' + local('summary_games', games.length));
+    $('.game_button_play').html('&#127918&nbsp;' + local('button_play'));
+
+    sort();
+    updateHeader();
+});
+
+$(function() {
+    log('Loading...');
+    insertCSS();
+
+    for (var i = 0; i < games.length; i++) {
+        var game = games[i];
+        $(".container_games").append(dom(game));
+    }
+    sort();
+    updateSummaries();
+
+    addSorter('name');
+    addSorter('features');
+    addSorter('price');
+    addSorter('size');
+
+    updateHeader();
+
+    $(document).on({
+        dragstart: function(event) {
+            event.preventDefault();
+        },
+        dragover: function(event) {
+            event.preventDefault();
+        },
+        drop: function(event) {
+            event.preventDefault();
+        }
+    });
+
+    $(document).on({
+        mouseenter: function() {
+            $($(this).children()[1]).addClass('game_image_hover').attr('id', '0');
+            $($(this).children()[2]).css('display', 'inline');
+        },
+        mouseleave: function() {
+            $($(this).children()[2]).css('display', 'none');
+        },
+        click: function() {
+            var id = $(this).attr('id').replace('game_image_', '');
+            remote.getGlobal('launchGame')(id);
+            remote.BrowserWindow.getFocusedWindow().minimize();
+        }
+    }, '.game_thumbnail');
+
+    $(document).on({
+        mouseenter: function() {
+            $(this).css('font-size', '160%');
+        },
+        mouseleave: function() {
+            $(this).css('font-size', '110%');
+        },
+        click: function() {
+            // TODO: Tooltip
+        }
+    }, '.features_icon');
+});
+
+setInterval(tick(), 60);
+
+function tick() {
+    var code = 128348;
+    return function() {
+        $('.loading').html('&#' + code);
+
+        if (code < 128359) code++;
+        else code = 128348;
+
+        $('.game_image_hover').each(function() {
+            var element = $(this);
+
+            var i = Number(element.attr('id'));
+
+            if ($(element.parent()).is(':hover')) {
+                if (i < 6) {
+                    i += 0.7;
+                }
+            }
+            else {
+                i -= 0.7;
+            }
+
+            if (i > 0) {
+                element.css('filter', 'blur(' + i + 'px) brightness(' + (100 - i * 6) + '%)');
+                element.css('clip', 'rect(' + (i / 6) + 'px, ' + (thumbnail_size.width - (i / 6)) + 'px, ' + (thumbnail_size.height - (i / 6)) + 'px, ' + (i / 6) + 'px)');
+                element.attr('id', i);
+            }
+            else {
+                element.removeClass('game_image_hover');
+                element.removeAttr('id');
+                element.css('filter', '');
+                element.css('clip', '');
+            }
+        });
+    };
+}
+
+function dom(game) {
+    return '' +
+    '<div id ="game_id_' + game.id + '" class="game_object">' +
+        '<div id="game_image_' + game.id + '" class="game_component game_thumbnail clickable">' +
+            '<div class="game_spacer"></div>' +
+            '<img class="game_image_component game_image" src="' + game.thumbnail + '"/>' +
+            '<div class="game_button_component" style="display: none;">' +
+                '<div class="game_image_component game_button_play">&#127918&nbsp;' + local('button_play') +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="game_component game_info_column game_label">' +
+            '<p class="game_title">' +
+                str(game.name) +
+            '</p>' +
+            '<p class="game_developers">' +
+                str(game.developers) +
+            '</p>' +
+        '</div>' +
+        '<div class="game_component game_info_column game_features">' +
+            '<p class="game_cell features_cell">' +
+                str(game.features) +
+            '</p>' +
+        '</div>' +
+        '<div class="game_component game_info_column game_price">' +
+            '<p class="game_cell price_cell' + (game.priceInfo  ? ' discount': '') + '">' +
+                priceLabel(game.priceInfo) +
+            '</p>' +
+        '</div>' +
+        '<div class="game_component game_info_column game_size">' +
+            '<p class="game_cell">' +
+                formatBytes(game.bytes) +
+            '</p>' +
+        '</div>' +
+    '</div>';
+}
+
+function updateSummaries() {
+    $('.summary_games').html('&#127918 ' + local('summary_games', games.length));
+
+    var bytes = 0;
+    var price = 0;
+
+    for (var i = 0; i < games.length; i++) {
+        bytes = +bytes + +games[i].bytes;
+
+        if (games[i].price != undefined) price = +price + +games[i].price;
+    }
+
+    $('.summary_price').html('&#128181 ' + priceInfo(price));
+    $('.summary_size').html('&#128190 ' + formatBytes(bytes));
+}
+
+function sort() {
+    var array = games.slice();
+    array.sort(sorter(config.sorting));
+
+    for (var i = 0; i < array.length; i++) {
+        $($('.container_games').children()[i]).replaceWith(dom(array[i]));
+    }
+
+    for (var key in remote.getGlobal('features')) {
+        $('.feature_' + key).prop('title', locals[config.lang].features[key]);
+    }
+}
+
+function sorter(criteria) {
+    var sign = 1;
+    var key = criteria;
+
+    if (criteria.startsWith('-')) {
+        sign = -1;
+        key = criteria.substring(1);
+    }
+
+    if (key == 'features') key = 'featuresCount';
+
+    return function compare(game1, game2) {
+        var val1 = property(game1, key);
+        var val2 = property(game2, key);
+        return sign * (key == 'name' ? val1.localeCompare(val2): val2 - val1);
+    }
+}
+
+function property(game, property) {
+    var value = game[property];
+
+    if (value != undefined) {
+        return value;
+    }
+    else {
+        return 0;
+    }
+}
+
+function str(obj) {
+    return obj != undefined ? obj: '<p class="loading"></p>';
+}
+
+function local(key, variable) {
+    return locals[config.lang][key].replace('%X', variable);
+}
+
+function formatBytes(bytes) {
+    if (bytes < 1) return "0 B";
+
+    var tera = bytes / 1099511627776.0;
+
+    if (tera > 1) return tera.toFixed(2) + " TB";
+    else {
+        var giga = bytes / 1073741824.0;
+
+        if (giga > 1) return giga.toFixed(2) + " GB";
+        else {
+            var mega = bytes / 1048576.0;
+
+            if (mega > 1) return mega.toFixed(2) + " MB";
+            else {
+                var kilo = bytes / 1024.0;
+                if (kilo > 1) return kilo.toFixed(2) + " KB";
+                else return bytes.toFixed(2) + " B";
+            }
+        }
+    }
+}
+
+function priceLabel(json) {
+    if (json == undefined) return '<p class="loading"></p>';
+    if (json.final < 0) return '';
+
+    var price = '&#128181 ';
+
+    if (json.final > 0) price += currencies[config.currency].char + ' ' + (json.final / currencies[config.currency].rate).toFixed(2);
+    else price += local('price_none');
+
+    if (json.discount_percent > 0) {
+        price += ' (- ' + json.discount_percent + "%)";
+    }
+
+    return price;
+}
+
+function priceInfo(price) {
+    return currencies[config.currency].char + ' ' + (price / currencies[config.currency].rate).toFixed(2);
+}
+
+function saveConfig() {
+    remote.getGlobal('saveConfig')(JSON.parse(JSON.stringify(config)));
+}
+
+function updateHeader() {
+    var sorting = config.sorting;
+
+    $('.sorting_thumbnail').html(local('column_icon'));
+    $('.sorting_name').html((sorting == 'name' ? '&#11015 ': sorting == '-name' ? '&#11014 ': '&nbsp;&nbsp; ') + local('column_name'));
+    $('.sorting_features').html((sorting == 'features' ? '&#11015 ': sorting == '-features' ? '&#11014 ': '&nbsp;&nbsp; ') + local('column_features'));
+    $('.sorting_price').html((sorting == 'price' ? '&#11015 ': sorting == '-price' ? '&#11014 ': '&nbsp;&nbsp; ') + local('column_price'));
+    $('.sorting_size').html((sorting == 'size' ? '&#11015 ': sorting == '-size' ? '&#11014 ': '&nbsp;&nbsp; ') + local('column_size'));
+}
+
+function addSorter(type) {
+    $('.sorting_' + type).click(function() {
+        if (config.sorting == type) config.sorting = '-' + type;
+        else config.sorting = type;
+
+        updateHeader();
+        saveConfig();
+
+        sort();
+    })
+}
+
+function insertCSS() {
+    $("head").append('<style type="text/css"></style>')
+    var css = $("head").children(":last");
+    css.html('' +
+        '.game_thumbnail { width: ' + thumbnail_size.width + 'px !important; }' +
+        '.game_thumbnail { height: ' + thumbnail_size.height + 'px !important; }' +
+        '.game_spacer { width: ' + thumbnail_size.width + 'px !important; }' +
+        '.game_spacer { height: ' + thumbnail_size.height + 'px !important; }' +
+        '.summary_games { width: ' + thumbnail_size.width + 'px !important; }' +
+        '.sorting_thumbnail { width: ' + thumbnail_size.width + 'px !important; }' +
+        '.game_image { width: ' + thumbnail_size.width + 'px !important; }' +
+        '.game_object { height: ' + thumbnail_size.height + 'px !important; }' +
+        '.game_object { background: #323232; }' +
+        '.game_title { color: #f0f0f0; }' +
+        '.game_developers { color: #8c8c8c; }' +
+        '.game_features { color: #f0f0f0; }' +
+        '.game_price { color: #f0f0f0; }' +
+        '.discount { color: #c8ffc8; }' +
+        '.game_size { color: #f0f0f0; }' +
+        '.game_object { border: 1px solid #242424; }' +
+        '.summary_cell, .sorting_cell { color: #f0f0f0; }' +
+        '.container_summary, .container_sorting { background: #1e1e1e; }' +
+        '::-webkit-scrollbar { background: #282828; }' +
+        '::-webkit-scrollbar-thumb:window-inactive, ::-webkit-scrollbar-thumb { background: #111111 }' +
+        'body { background: #1e1e1e; }'
+    );
+}
+
+function log(message) {
+    remote.getGlobal('log')('Renderer', message);
+}

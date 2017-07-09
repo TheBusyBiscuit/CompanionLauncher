@@ -1,0 +1,71 @@
+div {
+    cursor: default;
+}
+.game_object {
+    user-select:none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+.game_info_column {
+    float: left;
+    width: 100%;
+}
+.game_thumbnail {
+    margin-right: 4px;
+    overflow: visible;
+    position: relative;
+}
+.game_image_component {
+    position: absolute;
+}
+.game_image {
+    top: 4px;
+}
+.game_button_component {
+    pointer-events: none;
+}
+.game_button_play {
+    text-align: center;
+    font-size: 125%;
+    margin: auto;
+    color: #FFFFFF;
+    z-index: 10;
+    width: 100%;
+    margin-top: -28%;
+    pointer-events: none;
+    transform: translateY(-8px);
+}
+.container_summary {
+    position: fixed;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+.container_sorting {
+    position: fixed;
+    top: -1px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+}
+.sorting_thumbnail {
+    margin-left: 12px;
+}
+.summary_games {
+    margin-left: 6px;
+}
+.summary_cell {
+    position: relative;
+}
+.clickable {
+    cursor: pointer;
+}
+.features_icon {
+    font-size: 110%;
+    cursor: help;
+    transition: font-size 0.5s;
+}
