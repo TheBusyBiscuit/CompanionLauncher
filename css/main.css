@@ -79,17 +79,3 @@ div {
     font-size: 150%;
     text-align: center;
 }
-.settings_dropdown {
-    position: absolute;
-    overflow: auto;
-    box-shadow: 0 8px 16px 0;
-    z-index: 10;
-    display: inline-block;
-    background: #FFFFFF;
-    line-height: 0;
-}
-.dropdown_cell {
-    padding: 12px 16px;
-    display: block;
-    font-size: 100%;
-}
