@@ -18,7 +18,7 @@ function layout() {
                             type: 'info',
                             title: 'About CompanionLauncher',
                             buttons: [
-                                'View License',
+                                local('general', 'license'),
                                 'Close'
                             ],
                             message: '\nVersion: v' + app.getVersion() +
@@ -35,6 +35,9 @@ function layout() {
                                 dialog.showMessageBox({
                                     type: 'info',
                                     title: 'License',
+                                    buttons: [
+                                        'Close'
+                                    ],
                                     message: global.license
                                 });
                             }
@@ -60,6 +63,15 @@ function layout() {
                     label: local('general', 'source') + ' (GitHub)',
                     click: function() {
                         shell.openExternal('https://github.com/TheBusyBiscuit/CompanionLauncher');
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: local('general', 'quit'),
+                    click: function() {
+                        app.quit();
                     }
                 }
             ]

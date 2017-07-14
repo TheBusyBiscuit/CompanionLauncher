@@ -32,9 +32,11 @@
         "general": {
             "title": "General",
             "about": "About",
+            "license": "View License",
             "bugs": "Bug Tracker",
             "translations": "Help us translate!",
-            "source": "Source Code"
+            "source": "Source Code",
+            "quit": "Exit"
         },
         "settings": {
             "title": "Settings",

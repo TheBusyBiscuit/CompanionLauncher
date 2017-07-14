@@ -15,6 +15,7 @@ const PreInstall = require('./PreInstall.min.js');
 var libraries = ["E:/Software/Steam/steamapps"];
 
 var window;
+var exit = false;
 var stage = 0, stages = 6;
 
 app.on('ready', function() {
@@ -34,6 +35,10 @@ app.on('ready', function() {
     // Wait for Baking...
 });
 
+app.on('before-quit', function() {
+    exit = true;
+})
+
 function bake() {
     stage++;
 
@@ -45,6 +50,13 @@ function bake() {
             protocol: 'file:',
             slashes: true
         }));
+
+        window.on('close', function(event) {
+            if (!exit) {
+                event.preventDefault();
+                window.hide();
+            }
+        });
 
         TrayIcon.init();
         global.updateUI();
