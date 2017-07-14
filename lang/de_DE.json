@@ -58,6 +58,10 @@
         "thumbs_up": "Gut",
         "thumbs_down": "Schlecht",
         "hot": "Hei\u00DF",
-        "100": "Durchgespielt"
+        "100": "Durchgespielt",
+        "cool": "Cool",
+        "funny": "Lustig",
+        "boring": "Langweilig",
+        "scary": "Gruselig"
     }
 }

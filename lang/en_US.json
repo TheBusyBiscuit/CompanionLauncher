@@ -58,6 +58,10 @@
         "thumbs_up": "Good",
         "thumbs_down": "Bad",
         "hot": "Hot",
-        "100": "Completed"
+        "100": "Completed",
+        "cool": "Cool",
+        "funny": "Funny",
+        "boring": "Boring",
+        "scary": "Scary"
     }
 }
