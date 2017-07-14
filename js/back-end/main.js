@@ -16,7 +16,7 @@ var libraries = ["E:/Software/Steam/steamapps"];
 
 var window;
 var exit = false;
-var stage = 0, stages = 6;
+var stage = 0, stages = 7;
 
 app.on('ready', function() {
     window = new BrowserWindow({
@@ -90,7 +90,7 @@ function loadConfig() {
             global.config = JSON.parse(data);
             bake(); // 1
 
-            var modified = setupConfigValues([["currency", "USD"], ["lang", "en_US"], ["sorting", "name"], ["favourites", []], ["libraries", []]]);
+            var modified = setupConfigValues([["currency", "USD"], ["lang", "en_US"], ["sorting", "name"], ["markers", {}], ["libraries", []]]);
 
             if (modified) {
                 FileSystem.writeFile(path, JSON.stringify(global.config), function(err) {
@@ -140,10 +140,20 @@ function loadResources() {
         }
     });
 
+    FileSystem.readFile("./assets/markers.min.json", 'UTF-8', function(err, data) {
+        if (!err) {
+            global.markers = JSON.parse(data);
+            bake(); // 4
+        }
+        else {
+            log(err);
+        }
+    });
+
     FileSystem.readFile("./LICENSE", 'UTF-8', function(err, data) {
         if (!err) {
             global.license = data;
-            bake(); // 4
+            bake(); // 5
         }
         else {
             log(err);
@@ -164,7 +174,7 @@ function loadLocals() {
                         if (!err) {
                             var json = JSON.parse(data);
                             global.locals[json.code] = json;
-                            bake() // 5+n
+                            bake() // 6+n
                         }
                         else {
                             log(err);
@@ -173,7 +183,7 @@ function loadLocals() {
                 }
             }
 
-            bake(); // 5
+            bake(); // 6
         }
         else {
             log(err);

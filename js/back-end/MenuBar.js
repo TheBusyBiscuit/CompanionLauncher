@@ -70,6 +70,7 @@ function layout() {
                 },
                 {
                     label: local('general', 'quit'),
+                    accelerator: 'Ctrl+Q',
                     click: function() {
                         app.quit();
                     }
@@ -122,6 +123,13 @@ module.exports = {
                         accelerator: 'CmdOrCtrl+R',
                         click: function(item, window) {
                             if (window) window.reload();
+                        }
+                    },
+                    {
+                        label: 'Open config.json',
+                        accelerator: 'Ctrl+Shift+S',
+                        click: function(item, window) {
+                            shell.openItem(app.getPath("userData") + "/config.json");
                         }
                     }
                 ]

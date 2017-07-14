@@ -13,6 +13,7 @@ var config = remote.getGlobal('config');
 
 const locals = remote.getGlobal('locals');
 const currencies = remote.getGlobal('currencies');
+const markers = remote.getGlobal('markers');
 
 ipcRenderer.on('update_game', function(event, list, game, status) {
     log(status + ' ' + game.id);
@@ -157,7 +158,7 @@ function createGame(game) {
 }
 
 function createMenu(game) {
-    remote.getGlobal('createMenu')(game.id, [
+    var template = [
         {
             label: localM('game', 'play'),
             click: function() {
@@ -168,27 +169,43 @@ function createMenu(game) {
             type: 'separator'
         },
         {
-            label: (config.favourites.indexOf(game.id) == -1 ? localM('game', 'favourite_add'): localM('game', 'favourite_remove')),
-            click: function() {
-                var favourites = config.favourites;
-                var index = favourites.indexOf(game.id);
-
-                if (index == -1) {
-                    favourites.push(game.id);
-                }
-                else {
-                    favourites.splice(index, 1);
-                }
-
-                config.favourites = favourites;
-
-                saveConfig();
-                sort();
-
-                createMenu(game);
-            }
+            label: localM('game', 'mark'),
+            type: 'submenu',
+            submenu: []
         }
-    ]);
+    ];
+
+    var activeMarkers = config.markers[game.id];
+
+    for (var key in markers) {
+        template[2].submenu.push({
+            label: (locals[config.lang].markers[key]),
+            type: 'checkbox',
+            checked: (activeMarkers && activeMarkers.indexOf(key) > -1),
+            click: mark(game, key)
+        });
+    }
+
+    remote.getGlobal('createMenu')(game.id, template);
+}
+
+function mark(game, key) {
+    return function() {
+        var array = config.markers[game.id];
+        if (array == undefined) array = [];
+
+        var index = array.indexOf(key);
+
+        if (index == -1) array.push(key);
+        else array.splice(index, 1);
+
+        config.markers[game.id] = array;
+
+        saveConfig();
+        sort();
+
+        createMenu(game);
+    }
 }
 
 function dom(game) {
@@ -202,7 +219,7 @@ function dom(game) {
                 '</div>' +
             '</div>' +
             '<span id="favourite_"' + game.id + ' class="favourite">' +
-            (config.favourites.indexOf(game.id) == -1 ? '': '&#11088') +
+            addMarkers(game.id) +
             '</span>' +
         '</div>' +
         '<div class="game_component game_info_column game_label">' +
@@ -299,6 +316,19 @@ function local(key, variable) {
 
 function localM(section, key) {
     return locals[config.lang].menu[section][key];
+}
+
+function addMarkers(id) {
+    var text = '';
+
+    for (var key in markers) {
+        var array = config.markers[id];
+        if (array && array.indexOf(key) > -1) {
+            text += markers[key];
+        }
+    }
+
+    return text;
 }
 
 function formatBytes(bytes) {

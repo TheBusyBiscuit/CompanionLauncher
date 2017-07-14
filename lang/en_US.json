@@ -49,8 +49,15 @@
         },
         "game": {
             "play": "Play",
-            "favourite_add": "Mark as Favourite",
-            "favourite_remove": "Remove from Favourites"
+            "mark": "Mark as..."
         }
+    },
+    "markers": {
+        "favourite": "Favourite",
+        "love": "Lovely",
+        "thumbs_up": "Good",
+        "thumbs_down": "Bad",
+        "hot": "Hot",
+        "100": "Completed"
     }
 }

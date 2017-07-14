@@ -1,7 +1,7 @@
 {
     "code": "de_DE",
     "name": "Deutsch / German",
-    "column_icon": "Icon",
+    "column_icon": "Titelbild",
     "column_name": "Name",
     "column_features": "Features",
     "column_price": "Preis",
@@ -31,10 +31,10 @@
     "menu": {
         "general": {
             "title": "Allgemein",
-            "about": "Ueber",
+            "about": "\u00DCber",
             "license": "Lizenz anzeigen",
             "bugs": "Fehlermeldung",
-            "translations": "Hilf uns bei der Uebersetzung!",
+            "translations": "Hilf uns bei der \u00DCbersetzung!",
             "source": "Source Code",
             "quit": "Beenden"
         },
@@ -49,8 +49,15 @@
         },
         "game": {
             "play": "Starten",
-            "favourite_add": "Als Favorit markieren",
-            "favourite_remove": "Aus den Favoriten entfernen"
+            "mark": "Markieren..."
         }
+    },
+    "markers": {
+        "favourite": "Favorit",
+        "love": "Liebevoll",
+        "thumbs_up": "Gut",
+        "thumbs_down": "Schlecht",
+        "hot": "Hei\u00DF",
+        "100": "Durchgespielt"
     }
 }
