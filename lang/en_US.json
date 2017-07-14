@@ -44,6 +44,11 @@
         "tray": {
             "showHide": "Show / Hide",
             "quit": "Exit"
+        },
+        "game": {
+            "play": "Play",
+            "favourite_add": "Mark as Favourite",
+            "favourite_remove": "Remove from Favourites"
         }
     }
 }

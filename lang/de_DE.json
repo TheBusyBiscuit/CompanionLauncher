@@ -44,6 +44,11 @@
         "tray": {
             "showHide": "Zeigen / Verbergen",
             "quit": "Beenden"
+        },
+        "game": {
+            "play": "Starten",
+            "favourite_add": "Als Favorit markieren",
+            "favourite_remove": "Aus den Favoriten entfernen"
         }
     }
 }

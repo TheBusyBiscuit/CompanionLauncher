@@ -10,9 +10,7 @@
   "author": "TheBusyBiscuit",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.6.11"
-  },
-  "dependencies": {
+    "electron": "^1.6.11",
     "jquery": "^3.2.1"
   }
 }

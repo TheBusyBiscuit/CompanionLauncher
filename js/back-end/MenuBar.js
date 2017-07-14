@@ -4,10 +4,12 @@ const Menu = electron.Menu;
 const shell = electron.shell;
 const app = electron.app;
 
+var browserWindow;
+
 function layout() {
     return [
         {
-            label: 'General',
+            label: local('general', 'title'),
             submenu: [
                 {
                     label: local('general', 'about'),
@@ -19,9 +21,10 @@ function layout() {
                                 'View License',
                                 'Close'
                             ],
-                            message: 'Version: v' + app.getVersion() +
+                            message: '\nVersion: v' + app.getVersion() +
                             '\n' +
                             '\nAuthor(s): ' + global.authors +
+                            '\n' +
                             '\nElectron v' + process.versions.electron +
                             '\nChromium v' + process.versions.chrome +
                             '\nnode.js v' + process.versions.node
@@ -86,6 +89,8 @@ var map = {
 
 module.exports = {
     build: function(window) {
+        browserWindow = window;
+
         var template = layout();
 
         // Developer Tools
@@ -167,4 +172,14 @@ function local(parent, key) {
 
 function log(message) {
     global.log('Main', message);
+}
+
+var menus = {};
+
+global.createMenu = function(id, template) {
+    menus[id] = Menu.buildFromTemplate(template);
+}
+
+global.openMenu = function(id) {
+    menus[id].popup(browserWindow);
 }

@@ -1,6 +1,7 @@
-const remote = require('electron').remote;
-const ipcRenderer = require('electron').ipcRenderer;
-const FileSystem = require('fs');
+const electron = require('electron');
+const remote = electron.remote;
+const ipcRenderer = electron.ipcRenderer;
+const Menu = electron.Menu;
 
 const thumbnail_size = {
     width: (420 * 9 / 20).toFixed(0),
@@ -13,8 +14,6 @@ var config = remote.getGlobal('config');
 const locals = remote.getGlobal('locals');
 const currencies = remote.getGlobal('currencies');
 
-var color_picker_key;
-
 ipcRenderer.on('update_game', function(event, list, game, status) {
     log(status + ' ' + game.id);
     games = list;
@@ -26,7 +25,7 @@ ipcRenderer.on('update_game', function(event, list, game, status) {
         sort();
     }
     else if (status == 'create') {
-        $(".container_games").append(dom(game));
+        createGame(game);
 
         updateSummaries();
         sort();
@@ -44,13 +43,12 @@ ipcRenderer.on('update_lang', function(event, code) {
     $('.summary_games').html('&#127918 ' + local('summary_games', games.length));
     $('.game_button_play').html('&#127918&nbsp;' + local('button_play'));
 
+    for (var i = 0; i < games.length; i++) {
+        createMenu(games[i]);
+    }
+
     sort();
     updateHeader();
-});
-
-ipcRenderer.on('openColorPicker', function(event, key) {
-    color_picker_key = key;
-    $('#ColorPicker')[0].click();
 });
 
 $(function() {
@@ -61,7 +59,7 @@ $(function() {
 
     for (var i = 0; i < games.length; i++) {
         var game = games[i];
-        $(".container_games").append(dom(game));
+        createGame(game);
     }
     sort();
     updateSummaries();
@@ -93,6 +91,10 @@ $(function() {
         mouseleave: function() {
             $($(this).children()[2]).css('display', 'none');
         },
+        contextmenu: function() {
+            var id = $(this).attr('id').replace('game_image_', '');
+            remote.getGlobal('openMenu')(id);
+        },
         click: function() {
             var id = $(this).attr('id').replace('game_image_', '');
             remote.getGlobal('launchGame')(id);
@@ -106,9 +108,6 @@ $(function() {
         },
         mouseleave: function() {
             $(this).css('font-size', '110%');
-        },
-        click: function() {
-            // TODO: Tooltip
         }
     }, '.features_icon');
 });
@@ -152,6 +151,46 @@ function tick() {
     };
 }
 
+function createGame(game) {
+    $(".container_games").append(dom(game));
+    createMenu(game);
+}
+
+function createMenu(game) {
+    remote.getGlobal('createMenu')(game.id, [
+        {
+            label: localM('game', 'play'),
+            click: function() {
+                remote.getGlobal('launchGame')(game.id);
+            }
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: (config.favourites.indexOf(game.id) == -1 ? localM('game', 'favourite_add'): localM('game', 'favourite_remove')),
+            click: function() {
+                var favourites = config.favourites;
+                var index = favourites.indexOf(game.id);
+
+                if (index == -1) {
+                    favourites.push(game.id);
+                }
+                else {
+                    favourites.splice(index, 1);
+                }
+
+                config.favourites = favourites;
+
+                saveConfig();
+                sort();
+
+                createMenu(game);
+            }
+        }
+    ]);
+}
+
 function dom(game) {
     return '' +
     '<div id ="game_id_' + game.id + '" class="game_object">' +
@@ -162,6 +201,9 @@ function dom(game) {
                 '<div class="game_image_component game_button_play">&#127918&nbsp;' + local('button_play') +
                 '</div>' +
             '</div>' +
+            '<span id="favourite_"' + game.id + ' class="favourite">' +
+            (config.favourites.indexOf(game.id) == -1 ? '': '&#11088') +
+            '</span>' +
         '</div>' +
         '<div class="game_component game_info_column game_label">' +
             '<p class="game_title">' +
@@ -253,6 +295,10 @@ function str(obj) {
 
 function local(key, variable) {
     return locals[config.lang][key].replace('%X', variable);
+}
+
+function localM(section, key) {
+    return locals[config.lang].menu[section][key];
 }
 
 function formatBytes(bytes) {

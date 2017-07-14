@@ -78,7 +78,7 @@ function loadConfig() {
             global.config = JSON.parse(data);
             bake(); // 1
 
-            var modified = setupConfigValues([["currency", "USD"], ["lang", "en_US"], ["sorting", "name"]]);
+            var modified = setupConfigValues([["currency", "USD"], ["lang", "en_US"], ["sorting", "name"], ["favourites", []], ["libraries", []]]);
 
             if (modified) {
                 FileSystem.writeFile(path, JSON.stringify(global.config), function(err) {
