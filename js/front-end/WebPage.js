@@ -52,6 +52,12 @@ ipcRenderer.on('update_lang', function(event, code) {
     updateHeader();
 });
 
+ipcRenderer.on('update_filter', function(event, cfg) {
+    config = cfg;
+
+    sort();
+});
+
 $(function() {
     log('Loading...');
 
@@ -210,7 +216,7 @@ function mark(game, key) {
 
 function dom(game) {
     return '' +
-    '<div id ="game_id_' + game.id + '" class="game_object">' +
+    '<div id ="game_id_' + game.id + '" class="game_object"' + (isFiltered(game) ? '': ' style="display: none') + '">' +
         '<div id="game_image_' + game.id + '" class="game_component game_thumbnail clickable">' +
             '<div class="game_spacer"></div>' +
             '<img class="game_image_component game_image" src="' + game.thumbnail + '"/>' +
@@ -292,6 +298,26 @@ function sorter(criteria) {
         var val1 = property(game1, key);
         var val2 = property(game2, key);
         return sign * (key == 'name' ? val1.localeCompare(val2): val2 - val1);
+    }
+}
+
+function isFiltered(game) {
+    var filters = config.filters;
+    var activeMarkers = config.markers[game.id];
+
+    if (filters.length == 0) return true;
+    else {
+        if (activeMarkers == undefined) return false;
+
+        for (var i = 0; i < filters.length; i++) {
+            var filter = filters[i];
+            
+            if (activeMarkers.indexOf(filter) != -1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

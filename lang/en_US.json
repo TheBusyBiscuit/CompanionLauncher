@@ -43,6 +43,9 @@
             "language": "Language",
             "currency": "Currency"
         },
+        "filters": {
+            "title": "Filters"
+        },
         "tray": {
             "showHide": "Show / Hide",
             "quit": "Exit"

@@ -91,6 +91,10 @@ function layout() {
                     submenu: []
                 }
             ]
+        },
+        {
+            label: local('filters', 'title'),
+            submenu: []
         }
     ];
 }
@@ -178,11 +182,34 @@ module.exports = {
             })
         }
 
+        for (var filter in global.markers) {
+            template[2].submenu.push({
+                label: global.locals[global.config.lang].markers[filter],
+                type: 'checkbox',
+                checked: (global.config.filters.indexOf(filter) > -1),
+                click: changeFilter(filter)
+            });
+        }
+
         template[1].submenu[1].submenu.sort(function(a,b) {
             return a.label.localeCompare(b.label);
         })
 
         return Menu.buildFromTemplate(template);
+    }
+}
+
+function changeFilter(filter) {
+    return function() {
+        var index = global.config.filters.indexOf(filter);
+
+        if (index == -1) global.config.filters.push(filter);
+        else global.config.filters.splice(index, 1);
+
+        global.saveConfig(global.config);
+        global.updateUI();
+
+        browserWindow.webContents.send('update_filter', global.config);
     }
 }
 
