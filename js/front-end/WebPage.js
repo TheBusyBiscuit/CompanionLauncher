@@ -15,26 +15,37 @@ const locals = remote.getGlobal('locals');
 const currencies = remote.getGlobal('currencies');
 const markers = remote.getGlobal('markers');
 
+var loaded = false;
+
+ipcRenderer.on('load', function(event) {
+    loaded = true;
+
+    updateSummaries();
+    sort();
+});
+
 ipcRenderer.on('update_game', function(event, list, game, status) {
     log(status + ' ' + game.id);
     games = list;
 
-    if (status == 'update') {
-        $("#game_id_" + game.id).replaceWith(dom(game));
+    if (loaded) {
+        if (status == 'update') {
+            $("#game_id_" + game.id).replaceWith(dom(game));
 
-        updateSummaries();
-        sort();
-    }
-    else if (status == 'create') {
-        createGame(game);
+            updateSummaries();
+            sort();
+        }
+        else if (status == 'create') {
+            createGame(game);
 
-        updateSummaries();
-        sort();
-    }
-    else if (status == 'delete') {
-        $("#game_id_" + game.id).remove();
+            updateSummaries();
+            sort();
+        }
+        else if (status == 'delete') {
+            $("#game_id_" + game.id).remove();
 
-        updateSummaries();
+            updateSummaries();
+        }
     }
 });
 
@@ -68,8 +79,6 @@ $(function() {
         var game = games[i];
         createGame(game);
     }
-    sort();
-    updateSummaries();
 
     addSorter('name');
     addSorter('features');

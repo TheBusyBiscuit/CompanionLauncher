@@ -45,12 +45,6 @@ function bake() {
     log('Baking... Stage: ' + stage);
 
     if (stage == stages) {
-        window.loadURL(url.format({
-            pathname: 'index.html',
-            protocol: 'file:',
-            slashes: true
-        }));
-
         window.on('close', function(event) {
             if (!exit) {
                 event.preventDefault();
@@ -64,6 +58,16 @@ function bake() {
         LibraryReader.loadSteamLibraries(libraries);
 
         global.games = LibraryReader.listGames();
+
+        window.loadURL(url.format({
+            pathname: 'index.html',
+            protocol: 'file:',
+            slashes: true
+        }));
+
+        window.on('show', function() {
+            window.webContents.send('load');
+        })
 
         window.webContents.on('did-finish-load', function() {
             global.updateUI();
