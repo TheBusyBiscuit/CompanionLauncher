@@ -260,7 +260,7 @@ function dom(game) {
             '</p>' +
         '</div>' +
         '<div class="game_component game_info_column game_price">' +
-            '<p class="game_cell price_cell' + (game.priceInfo  ? ' discount': '') + '">' +
+            '<p class="game_cell price_cell' + (game.priceInfo && game.priceInfo.discount_percent > 0  ? ' discount': '') + '">' +
                 priceLabel(game.priceInfo) +
             '</p>' +
         '</div>' +
