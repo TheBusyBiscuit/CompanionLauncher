@@ -1,5 +1,6 @@
 /node_modules/
 *.bat
 *.min.*
+*.log
+*.lnk
 JAFileMinifier.blacklist
-atom.exe.lnk

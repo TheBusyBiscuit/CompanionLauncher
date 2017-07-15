@@ -194,7 +194,7 @@ function loadLocals() {
 global.saveConfig = function(cfg) {
     log('Saving Config...')
     global.config = cfg;
-    FileSystem.writeFile(app.getPath('userData') + '/config.json', JSON.stringify(cfg), function(err) {
+    FileSystem.writeFile(app.getPath('userData') + '/config.json', JSON.stringify(cfg, null, 2), function(err) {
         if (err) log(err);
     });
 }

@@ -39,7 +39,7 @@ module.exports = {
                             return b.amount - a.amount;
                         })
 
-                        FileSystem.writeFile('./assets/contributors.json', JSON.stringify(list), function(err) {
+                        FileSystem.writeFile('./assets/contributors.json', JSON.stringify(list, null, 2), function(err) {
                             if (err) log(err);
                             else {
                                 var text = '';
