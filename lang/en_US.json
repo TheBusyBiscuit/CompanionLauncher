@@ -41,7 +41,8 @@
         "settings": {
             "title": "Settings",
             "language": "Language",
-            "currency": "Currency"
+            "currency": "Currency",
+            "hidden": "Hidden Games..."
         },
         "filters": {
             "title": "Filters"
@@ -52,7 +53,8 @@
         },
         "game": {
             "play": "Play",
-            "mark": "Mark as..."
+            "mark": "Mark as...",
+            "hide": "Hide"
         }
     },
     "markers": {

@@ -41,7 +41,8 @@
         "settings": {
             "title": "Einstellungen",
             "language": "Sprache",
-            "currency": "Waehrung"
+            "currency": "Waehrung",
+            "hidden": "Ausgeblendete Spiele..."
         },
         "filters": {
             "title": "Filter"
@@ -52,7 +53,8 @@
         },
         "game": {
             "play": "Starten",
-            "mark": "Markieren..."
+            "mark": "Markieren...",
+            "hide": "Ausblenden"
         }
     },
     "markers": {

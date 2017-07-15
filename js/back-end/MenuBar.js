@@ -89,6 +89,11 @@ function layout() {
                     label: local('settings', 'currency'),
                     type: 'submenu',
                     submenu: []
+                },
+                {
+                    label: local('settings', 'hidden'),
+                    type: 'submenu',
+                    submenu: []
                 }
             ]
         },
@@ -160,6 +165,16 @@ module.exports = {
             });
         }
 
+
+        for (var id in global.config.markers) {
+            if (global.config.markers[id].indexOf('hidden') != -1) {
+                template[1].submenu[2].submenu.push({
+                    label: global.lookup[id] ? global.lookup[id].name: 'Loading...',
+                    click: unhide(id)
+                });
+            }
+        }
+
         for (var code in global.locals) {
             var language = global.locals[code];
             map.languages[language.name] = code;
@@ -196,6 +211,17 @@ module.exports = {
         })
 
         return Menu.buildFromTemplate(template);
+    }
+}
+
+function unhide(id) {
+    return function() {
+        global.config.markers[id].splice(global.config.markers[id].indexOf('hidden'), 1);
+
+        global.saveConfig(global.config);
+        global.updateUI();
+
+        browserWindow.webContents.send('update_filter', global.config);
     }
 }
 

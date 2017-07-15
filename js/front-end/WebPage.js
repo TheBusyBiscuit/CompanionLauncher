@@ -178,6 +178,13 @@ function createMenu(game) {
             label: localM('game', 'mark'),
             type: 'submenu',
             submenu: []
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: localM('game', 'hide'),
+            click: mark(game, 'hidden')
         }
     ];
 
@@ -211,6 +218,8 @@ function mark(game, key) {
         sort();
 
         createMenu(game);
+
+        remote.getGlobal('updateUI')();
     }
 }
 
@@ -305,20 +314,19 @@ function isFiltered(game) {
     var filters = config.filters;
     var activeMarkers = config.markers[game.id];
 
+    if (activeMarkers && activeMarkers.indexOf('hidden') != -1) return false;
     if (filters.length == 0) return true;
-    else {
-        if (activeMarkers == undefined) return false;
+    if (activeMarkers == undefined) return false;
 
-        for (var i = 0; i < filters.length; i++) {
-            var filter = filters[i];
-            
-            if (activeMarkers.indexOf(filter) != -1) {
-                return true;
-            }
+    for (var i = 0; i < filters.length; i++) {
+        var filter = filters[i];
+
+        if (activeMarkers.indexOf(filter) != -1) {
+            return true;
         }
-
-        return false;
     }
+
+    return false;
 }
 
 function property(game, property) {

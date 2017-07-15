@@ -59,7 +59,6 @@ function bake() {
         });
 
         TrayIcon.init();
-        global.updateUI();
 
         LibraryReader.setWindow(window);
         LibraryReader.loadSteamLibraries(libraries);
@@ -67,6 +66,7 @@ function bake() {
         global.games = LibraryReader.listGames();
 
         window.webContents.on('did-finish-load', function() {
+            global.updateUI();
             window.show();
         });
 

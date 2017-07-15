@@ -12,6 +12,8 @@ var idlist = [];
 prepareDirectory("thumbnails");
 prepareDirectory("details");
 
+global.lookup = {};
+
 module.exports = {
 
     setWindow: function(obj) {
@@ -121,6 +123,8 @@ function loadGame(file) {
                 idlist.push(id);
                 game.id = id;
                 log(game.name + " (" + game.id + ")");
+
+                global.lookup[id] = game;
 
                 if (!FileSystem.existsSync(app.getPath("userData") + "/thumbnails/" + game.id + ".jpg")) {
                     log("  Downloading header.jpg");
