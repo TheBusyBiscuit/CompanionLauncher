@@ -10,7 +10,7 @@ const FileSystem = require('fs');
 const LibraryReader = require('./LibraryReader.min.js');
 const MenuBar = require('./MenuBar.min.js');
 const TrayIcon = require('./TrayIcon.min.js');
-const PreInstall = require('./PreInstall.min.js');
+const PreInstall = require('./../deployment/PreInstall.min.js');
 
 var libraries = ["E:/Software/Steam/steamapps"];
 

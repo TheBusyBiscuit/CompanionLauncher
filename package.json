@@ -1,14 +1,14 @@
 {
   "name": "CompanionLauncher",
   "version": "2.0.0",
-  "description": "",
+  "description": "A fresh Steam Games Browser powered by Electron",
   "repository": "https://github.com/TheBusyBiscuit/CompanionLauncher",
+  "author": "TheBusyBiscuit",
+  "license": "MIT",
   "main": "js/back-end/main.min.js",
   "scripts": {
     "start": "electron ."
   },
-  "author": "TheBusyBiscuit",
-  "license": "MIT",
   "devDependencies": {
     "electron": "^1.6.11"
   },
