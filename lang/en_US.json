@@ -45,7 +45,8 @@
             "hidden": "Hidden Games..."
         },
         "filters": {
-            "title": "Filters"
+            "title": "Filters",
+            "search": "Search..."
         },
         "tray": {
             "showHide": "Show / Hide",

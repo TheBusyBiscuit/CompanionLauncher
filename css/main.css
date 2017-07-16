@@ -79,3 +79,7 @@ div {
     font-size: 150%;
     text-align: center;
 }
+.searchbar {
+    z-index: 100;
+    position: fixed;
+}

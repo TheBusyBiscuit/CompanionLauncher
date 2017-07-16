@@ -39,7 +39,7 @@ module.exports = {
                             return b.amount - a.amount;
                         })
 
-                        FileSystem.writeFile('./assets/contributors.json', JSON.stringify(list, null, 2), function(err) {
+                        FileSystem.writeFile(__dirname + '/../../assets/contributors.json', JSON.stringify(list, null, 2), function(err) {
                             if (err) log(err);
                             else {
                                 var text = '';
@@ -61,7 +61,7 @@ module.exports = {
             });
         }
         else {
-            FileSystem.readFile('./assets/contributors.min.json', function(err, data) {
+            FileSystem.readFile(__dirname + '/../../assets/contributors.min.json', function(err, data) {
                 if (err) log(err);
                 else {
                     var list = JSON.parse(data);

@@ -99,7 +99,15 @@ function layout() {
         },
         {
             label: local('filters', 'title'),
-            submenu: []
+            submenu: [
+                {
+                    label: local('filters', 'search'),
+                    accelerator: 'Ctrl+F',
+                    click: function(item, window) {
+                        if (window) window.webContents.send('toggle_search');
+                    }
+                }
+            ]
         }
     ];
 }

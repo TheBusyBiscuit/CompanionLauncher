@@ -25,7 +25,7 @@ function layout() {
 
 module.exports = {
     init: function() {
-        global.tray = new Tray('./assets/icon.png');
+        global.tray = new Tray(__dirname + '/../../assets/icon.png');
 
         global.tray.on('click', function() {
             if (window.isVisible()) window.hide();

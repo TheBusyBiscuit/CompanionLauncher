@@ -45,7 +45,8 @@
             "hidden": "Ausgeblendete Spiele..."
         },
         "filters": {
-            "title": "Filter"
+            "title": "Filter",
+            "search": "Durchsuchen..."
         },
         "tray": {
             "showHide": "Zeigen / Verbergen",

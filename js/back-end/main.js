@@ -19,15 +19,17 @@ var exit = false;
 var stage = 0, stages = 7;
 
 app.on('ready', function() {
+    log('DEVELOPER MODE? ' + global.isDevMode());
+
     window = new BrowserWindow({
         width: 1000,
         height: 760,
         show: false,
-        icon: './assets/icon.png',
+        icon: __dirname + '/../../assets/icon.png',
         title: 'CompanionLauncher v2.0'
     });
 
-    PreInstall.update(bake);
+    PreInstall.update(bake); // 1
     loadConfig();
     loadLocals();
     loadResources();
@@ -60,7 +62,7 @@ function bake() {
         global.games = LibraryReader.listGames();
 
         window.loadURL(url.format({
-            pathname: 'index.html',
+            pathname: __dirname + '/../../index.html',
             protocol: 'file:',
             slashes: true
         }));
@@ -92,7 +94,7 @@ function loadConfig() {
     FileSystem.readFile(path, 'UTF-8', function(err, data) {
         if (!err) {
             global.config = JSON.parse(data);
-            bake(); // 1
+            bake(); // 2
 
             var modified = setupConfigValues([["currency", "USD"], ["lang", "en_US"], ["sorting", "name"], ["markers", {}], ["filters", []], ["libraries", []]]);
 
@@ -124,19 +126,9 @@ function setupConfigValues(array) {
 }
 
 function loadResources() {
-    FileSystem.readFile("./assets/features.min.json", 'UTF-8', function(err, data) {
+    FileSystem.readFile(__dirname + '/../../assets/features.min.json', 'UTF-8', function(err, data) {
         if (!err) {
             global.features = JSON.parse(data);
-            bake(); // 2
-        }
-        else {
-            log(err);
-        }
-    });
-
-    FileSystem.readFile("./assets/currencies.min.json", 'UTF-8', function(err, data) {
-        if (!err) {
-            global.currencies = JSON.parse(data);
             bake(); // 3
         }
         else {
@@ -144,9 +136,9 @@ function loadResources() {
         }
     });
 
-    FileSystem.readFile("./assets/markers.min.json", 'UTF-8', function(err, data) {
+    FileSystem.readFile(__dirname + '/../../assets/currencies.min.json', 'UTF-8', function(err, data) {
         if (!err) {
-            global.markers = JSON.parse(data);
+            global.currencies = JSON.parse(data);
             bake(); // 4
         }
         else {
@@ -154,10 +146,20 @@ function loadResources() {
         }
     });
 
-    FileSystem.readFile("./LICENSE", 'UTF-8', function(err, data) {
+    FileSystem.readFile(__dirname + '/../../assets/markers.min.json', 'UTF-8', function(err, data) {
+        if (!err) {
+            global.markers = JSON.parse(data);
+            bake(); // 5
+        }
+        else {
+            log(err);
+        }
+    });
+
+    FileSystem.readFile(__dirname + '/../../LICENSE', 'UTF-8', function(err, data) {
         if (!err) {
             global.license = data;
-            bake(); // 5
+            bake(); // 6
         }
         else {
             log(err);
@@ -168,17 +170,17 @@ function loadResources() {
 function loadLocals() {
     global.locals = {};
 
-    FileSystem.readdir("./lang", function(err, files) {
+    FileSystem.readdir(__dirname + '/../../lang', function(err, files) {
         if (!err) {
             for (var i = 0; i < files.length; i++) {
                 if (files[i].match('.*_.*\.min\.json')) {
                     stages++;
 
-                    FileSystem.readFile("./lang/" + files[i], 'UTF-8', function(err, data) {
+                    FileSystem.readFile(__dirname + '/../../lang/' + files[i], 'UTF-8', function(err, data) {
                         if (!err) {
                             var json = JSON.parse(data);
                             global.locals[json.code] = json;
-                            bake() // 6+n
+                            bake() // 7+n
                         }
                         else {
                             log(err);
@@ -187,7 +189,7 @@ function loadLocals() {
                 }
             }
 
-            bake(); // 6
+            bake(); // 7
         }
         else {
             log(err);

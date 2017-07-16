@@ -24,6 +24,14 @@ ipcRenderer.on('load', function(event) {
     sort();
 });
 
+ipcRenderer.on('toggle_search', function(event) {
+    var div = $('.searchbar');
+    var style = div.css('display');
+    div.css('display', style == 'none' ? 'block': 'none');
+
+    $('.search_textfield').focus();
+});
+
 ipcRenderer.on('update_game', function(event, list, game, status) {
     log(status + ' ' + game.id);
     games = list;
@@ -84,6 +92,15 @@ $(function() {
     addSorter('features');
     addSorter('price');
     addSorter('size');
+
+    $('.search_textfield').on('input', function() {
+        var value = $('.search_textfield').val();
+        var allowed = games.filter(search(value));
+
+        for (var i = 0; i < games.length; i++) {
+            $('#game_id_' + games[i].id).css('display', (allowed.indexOf(games[i]) == -1 ? 'none': ''));
+        }
+    });
 
     updateHeader();
 
@@ -266,7 +283,7 @@ function dom(game) {
         '</div>' +
         '<div class="game_component game_info_column game_size">' +
             '<p class="game_cell">' +
-                formatBytes(game.bytes) +
+                '&#128190 ' + formatBytes(game.bytes) +
             '</p>' +
         '</div>' +
     '</div>';
@@ -322,7 +339,9 @@ function sorter(criteria) {
 function isFiltered(game) {
     var filters = config.filters;
     var activeMarkers = config.markers[game.id];
+    var input = $('.search_textfield').val();
 
+    if (!search(input)(game)) return false;
     if (activeMarkers && activeMarkers.indexOf('hidden') != -1) return false;
     if (filters.length == 0) return true;
     if (activeMarkers == undefined) return false;
@@ -441,6 +460,19 @@ function addSorter(type) {
 
         sort();
     })
+}
+
+function search(input) {
+    if (input == '') return function() { return true; }
+
+    var query = input.toLowerCase();
+
+    return function(game) {
+        if (game.name && game.name.toLowerCase().indexOf(query) != -1) return true;
+        if (game.developers && game.developers.toLowerCase().indexOf(query) != -1) return true;
+
+        return false;
+    }
 }
 
 function updateCSS() {
