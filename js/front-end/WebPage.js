@@ -63,6 +63,8 @@ ipcRenderer.on('update_lang', function(event, code) {
     $('.summary_games').html('&#127918 ' + local('summary_games', games.length));
     $('.game_button_play').html('&#127918&nbsp;' + local('button_play'));
 
+    $('.search_textfield').attr('placeholder', localM('filters', 'search'));
+
     for (var i = 0; i < games.length; i++) {
         createMenu(games[i]);
     }
@@ -92,7 +94,8 @@ $(function() {
     addSorter('features');
     addSorter('price');
     addSorter('size');
-
+    
+    $('.search_textfield').attr('placeholder', localM('filters', 'search'));
     $('.search_textfield').on('input', function() {
         var value = $('.search_textfield').val();
         var allowed = games.filter(search(value));
