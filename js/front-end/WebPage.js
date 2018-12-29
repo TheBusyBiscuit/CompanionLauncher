@@ -1,9 +1,9 @@
-const electron = require('electron');
-const remote = electron.remote;
-const ipcRenderer = electron.ipcRenderer;
-const Menu = electron.Menu;
+var electron = require('electron');
+var remote = electron.remote;
+var ipcRenderer = electron.ipcRenderer;
+var Menu = electron.Menu;
 
-const thumbnail_size = {
+var thumbnail_size = {
     width: (420 * 9 / 20).toFixed(0),
     height: (215 * 9 / 20).toFixed(0)
 };
@@ -11,9 +11,9 @@ const thumbnail_size = {
 var games = remote.getGlobal('games');
 var config = remote.getGlobal('config');
 
-const locals = remote.getGlobal('locals');
-const currencies = remote.getGlobal('currencies');
-const markers = remote.getGlobal('markers');
+var locals = remote.getGlobal('locals');
+var currencies = remote.getGlobal('currencies');
+var markers = remote.getGlobal('markers');
 
 var loaded = false;
 
@@ -94,7 +94,7 @@ $(function() {
     addSorter('features');
     addSorter('price');
     addSorter('size');
-    
+
     $('.search_textfield').attr('placeholder', localM('filters', 'search'));
     $('.search_textfield').on('input', function() {
         var value = $('.search_textfield').val();
@@ -473,6 +473,12 @@ function search(input) {
     return function(game) {
         if (game.name && game.name.toLowerCase().indexOf(query) != -1) return true;
         if (game.developers && game.developers.toLowerCase().indexOf(query) != -1) return true;
+
+        if (game.featuresTooltip) {
+            for (var i in game.featuresTooltip) {
+                if (game.featuresTooltip[i].toLowerCase().indexOf(query) != -1) return true;
+            }
+        }
 
         return false;
     }
