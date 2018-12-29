@@ -21,11 +21,13 @@
         "18": "Partial Gamepad Support",
         "22": "Achievements",
         "23": "Steam Cloud",
+        "27": "Cross-Platform Multiplayer",
         "28": "Full Gamepad Support",
         "29": "Steam Trading Cards",
         "30": "Steam Workshop",
         "35": "Ingame Transactions",
         "36": "Online Multiplayer",
+        "37": "Local Multiplayer",
         "38": "Online Co-op"
     },
     "menu": {

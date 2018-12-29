@@ -43,6 +43,10 @@
         "name": "Steam Cloud",
         "char": "&#9925"
     },
+    "27": {
+        "name": "Cross-Platform Multiplayer",
+        "char": "&#128760"
+    },
     "28": {
         "name": "Full Gamepad Support",
         "char": "&#127918"
@@ -62,6 +66,10 @@
     "36": {
         "name": "Online Multi-Player",
         "char": "&#127759"
+    },
+    "37": {
+        "name": "Local Multi-Player",
+        "char": "&#128101"
     },
     "38": {
         "name": "Online Co-op",

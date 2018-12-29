@@ -17,6 +17,8 @@ var markers = remote.getGlobal('markers');
 
 var loaded = false;
 
+var featureTranslations = {};
+
 ipcRenderer.on('load', function(event) {
     loaded = true;
 
@@ -318,6 +320,7 @@ function sort() {
 
     for (var key in remote.getGlobal('features')) {
         $('.feature_' + key).prop('title', locals[config.lang].features[key]);
+        featureTranslations[key] = locals[config.lang].features[key];
     }
 }
 
@@ -476,7 +479,7 @@ function search(input) {
 
         if (game.featuresTooltip) {
             for (var i in game.featuresTooltip) {
-                if (game.featuresTooltip[i].toLowerCase().indexOf(query) != -1) return true;
+                if (featureTranslations[game.featuresTooltip[i]].toLowerCase().indexOf(query) != -1) return true;
             }
         }
 

@@ -1,16 +1,16 @@
 // Electron Initialization
-const electron = require('electron');
-const app = electron.app;
-const Menu = electron.Menu;
-const BrowserWindow = electron.BrowserWindow;
+var electron = require('electron');
+var app = electron.app;
+var Menu = electron.Menu;
+var BrowserWindow = electron.BrowserWindow;
 
 // Other Modules
-const url = require('url');
-const FileSystem = require('fs');
-const LibraryReader = require('./LibraryReader.min.js');
-const MenuBar = require('./MenuBar.min.js');
-const TrayIcon = require('./TrayIcon.min.js');
-const PreInstall = require('./../deployment/PreInstall.min.js');
+var url = require('url');
+var FileSystem = require('fs');
+var LibraryReader = require('./LibraryReader.min.js');
+var MenuBar = require('./MenuBar.min.js');
+var TrayIcon = require('./TrayIcon.min.js');
+var PreInstall = require('./../deployment/PreInstall.min.js');
 
 var libraries = ["E:/Software/Steam/steamapps"];
 
@@ -84,6 +84,7 @@ function bake() {
 
 function loadConfig() {
     var path = app.getPath("userData") + "/config.json";
+    console.log("Using Config: " + path);
 
     if (!FileSystem.existsSync(path)) {
         FileSystem.writeFile(path, "{}", function(err) {

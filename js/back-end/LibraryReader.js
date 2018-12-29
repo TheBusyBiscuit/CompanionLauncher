@@ -165,10 +165,20 @@ function loadGame(file) {
                     }
                     else {
                         log("   " + game.id + ".json (" + code + ")");
+
+                        if (FileSystem.existsSync(app.getPath("userData") + "/details/" + game.id + ".json")) {
+                            log("Fetching local copy of " + game.id + ".json");
+                            FileSystem.readFile(app.getPath("userData") + "/details/" + game.id + ".json", 'UTF-8', function(err, data) {
+                                if (!err) {
+                                    readDetails(game, JSON.parse(data));
+                                }
+                            });
+                        }
                     }
                 }).on('error', function(err) {
                     log(err);
                     if (FileSystem.existsSync(app.getPath("userData") + "/details/" + game.id + ".json")) {
+                        log("Fetching local copy of " + game.id + ".json");
                         FileSystem.readFile(app.getPath("userData") + "/details/" + game.id + ".json", 'UTF-8', function(err, data) {
                             if (!err) {
                                 readDetails(game, JSON.parse(data));
