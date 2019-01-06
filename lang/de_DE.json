@@ -9,6 +9,9 @@
     "summary_games": "%X Spiele installiert",
     "price_none": "Kostenlos",
     "button_play": "Starten",
+    "search": {
+        "quick-launch": "Suche nach einem Spiel um es zu starten..."
+    },
     "features": {
         "1": "Mehrspieler",
         "2": "Einzelspieler",
@@ -52,6 +55,7 @@
         },
         "tray": {
             "showHide": "Zeigen / Verbergen",
+            "quickLaunch": "Schnell-Start",
             "quit": "Beenden"
         },
         "game": {

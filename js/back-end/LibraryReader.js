@@ -6,7 +6,7 @@ var FileSystem = require('fs');
 var http = require('http');
 var https = require('https');
 
-var window;
+var window, quickWindow;
 var games = [];
 var idlist = [];
 
@@ -15,10 +15,13 @@ prepareDirectory("details");
 
 global.lookup = {};
 
+var disableDownloads = process.env.ELECTRON_DISABLE_DOWNLOADS == 'true';
+
 module.exports = {
 
-    setWindow: function(obj) {
+    setWindows: function(obj, quick) {
         window = obj;
+        quickWindow = quick;
     },
 
     listGames: function() {
@@ -26,7 +29,6 @@ module.exports = {
     },
 
     ping: function(libraries) {
-
         for (var i = 0; i < idlist.length; i++) {
             var id = idlist[i];
             var exists = false;
@@ -75,6 +77,8 @@ module.exports = {
     },
 
     loadSteamLibraries: function(libraries) {
+        log("Are Downloads enabled? " + !disableDownloads);
+
         for (var i = 0; i < libraries.length; i++) {
             var path = libraries[i];
             log('Reading ' + path);
@@ -127,9 +131,9 @@ function loadGame(file) {
 
                 global.lookup[id] = game;
 
-                if (!FileSystem.existsSync(app.getPath("userData") + "/thumbnails/" + game.id + ".jpg")) {
+                if (!FileSystem.existsSync(app.getPath("userData") + "/thumbnails/" + game.id + ".jpg") && !disableDownloads) {
                     log("  Downloading header.jpg");
-                    var request = http.get("http://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header.jpg", function(response) {
+                    http.get("http://cdn.akamai.steamstatic.com/steam/apps/" + id + "/header.jpg", function(response) {
                         var code = response.statusCode;
                         if (code == 200) {
                             var stream = FileSystem.createWriteStream(app.getPath("userData") + "/thumbnails/" + game.id + ".jpg");
@@ -141,51 +145,47 @@ function loadGame(file) {
                     });
                 }
                 else {
+                    log("  Fetching local copy of  header.jpg");
                     game.thumbnail = app.getPath("userData") + '/thumbnails/' + game.id + '.jpg';
                 }
-                log("  Downloading details.json");
-                https.get('https://store.steampowered.com/api/appdetails/?filters=price_overview,developers,categories&appids=' + id + '&cc=' + global.currencies[global.config.currency].cc, function(response) {
-                    var code = response.statusCode;
-                    if (code == 200) {
-                        var body = '';
 
-                        var stream = FileSystem.createWriteStream(app.getPath("userData") + "/details/" + game.id + ".json");
-                        response.pipe(stream);
+                if (FileSystem.existsSync(app.getPath("userData") + "/details/" + game.id + ".json")) {
+                    log("Fetching local copy of " + game.id + ".json");
+                    FileSystem.readFile(app.getPath("userData") + "/details/" + game.id + ".json", 'UTF-8', function(err, data) {
+                        if (!err) {
+                            readDetails(game, JSON.parse(data));
+                        }
+                    });
+                }
 
-                        response.on('data', function(data) {
-                            body += data;
-                        });
+                if (!disableDownloads) {
+                    log("  Downloading details.json");
+                    https.get('https://store.steampowered.com/api/appdetails/?filters=price_overview,developers,categories&appids=' + id + '&cc=' + global.currencies[global.config.currency].cc, function(response) {
+                        var code = response.statusCode;
+                        if (code == 200) {
+                            var body = '';
 
-                        response.on('end', function() {
-                            var details = JSON.parse(body);
-                            readDetails(game, details);
+                            var stream = FileSystem.createWriteStream(app.getPath("userData") + "/details/" + game.id + ".json");
+                            response.pipe(stream);
 
-                            log("   " + game.id + ".json (" + code + ")");
-                        });
-                    }
-                    else {
-                        log("   " + game.id + ".json (" + code + ")");
+                            response.on('data', function(data) {
+                                body += data;
+                            });
 
-                        if (FileSystem.existsSync(app.getPath("userData") + "/details/" + game.id + ".json")) {
-                            log("Fetching local copy of " + game.id + ".json");
-                            FileSystem.readFile(app.getPath("userData") + "/details/" + game.id + ".json", 'UTF-8', function(err, data) {
-                                if (!err) {
-                                    readDetails(game, JSON.parse(data));
-                                }
+                            response.on('end', function() {
+                                var details = JSON.parse(body);
+                                readDetails(game, details);
+
+                                log("   " + game.id + ".json (" + code + ")");
                             });
                         }
-                    }
-                }).on('error', function(err) {
-                    log(err);
-                    if (FileSystem.existsSync(app.getPath("userData") + "/details/" + game.id + ".json")) {
-                        log("Fetching local copy of " + game.id + ".json");
-                        FileSystem.readFile(app.getPath("userData") + "/details/" + game.id + ".json", 'UTF-8', function(err, data) {
-                            if (!err) {
-                                readDetails(game, JSON.parse(data));
-                            }
-                        });
-                    }
-                });
+                        else {
+                            log("   " + game.id + ".json (" + code + ")");
+                        }
+                    }).on('error', function(err) {
+                        log(err);
+                    });
+                }
 
                 games.push(game);
             }
@@ -260,7 +260,9 @@ function sendUpdate(game, status) {
     if (status == 'update') {
         games[idlist.indexOf(game.id)] = game;
     }
+
     window.webContents.send('update_game', games, game, status);
+    quickWindow.webContents.send('update_game', games, game, status);
 }
 
 function replaceAll(str, find, replace) {

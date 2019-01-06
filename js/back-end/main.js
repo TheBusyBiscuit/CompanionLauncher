@@ -14,7 +14,7 @@ var PreInstall = require('./../deployment/PreInstall.min.js');
 
 var libraries = ["E:/Software/Steam/steamapps"];
 
-var window;
+var window, quickWindow;
 var exit = false;
 var stage = 0, stages = 7;
 
@@ -26,8 +26,20 @@ app.on('ready', function() {
         height: 760,
         show: false,
         icon: __dirname + '/../../assets/icon.png',
-        title: 'CompanionLauncher v2.0'
+        title: 'CompanionLauncher v' + app.getVersion()
     });
+
+    quickWindow = new BrowserWindow({
+        width: 720,
+        height: 52,
+        show: false,
+        frame: false,
+        resizable: false,
+        icon: __dirname + '/../../assets/icon.png',
+        title: 'CompanionLauncher v' + app.getVersion() + ' (Quick-Launcher)'
+    });
+
+    quickWindow.setMenu(null);
 
     PreInstall.update(bake); // 1
     loadConfig();
@@ -56,10 +68,16 @@ function bake() {
 
         TrayIcon.init();
 
-        LibraryReader.setWindow(window);
+        LibraryReader.setWindows(window, quickWindow);
         LibraryReader.loadSteamLibraries(libraries);
 
         global.games = LibraryReader.listGames();
+
+        quickWindow.loadURL(url.format({
+            pathname: __dirname + '/../../quickLaunch.html',
+            protocol: 'file:',
+            slashes: true
+        }));
 
         window.loadURL(url.format({
             pathname: __dirname + '/../../index.html',
@@ -226,4 +244,13 @@ global.updateUI = function() {
 
     Menu.setApplicationMenu(menu);
     window.setMenu(menu);
+}
+
+global.openQuickLauncher = function() {
+    if (quickWindow.isVisible()) quickWindow.hide();
+    else quickWindow.show();
+}
+
+global.setQuickLauncherHeight = function(height) {
+    quickWindow.setSize(quickWindow.getSize()[0], height);
 }

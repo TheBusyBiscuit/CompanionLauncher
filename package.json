@@ -1,6 +1,6 @@
 {
   "name": "CompanionLauncher",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A fresh Steam Games Browser powered by Electron",
   "repository": "https://github.com/TheBusyBiscuit/CompanionLauncher",
   "author": "TheBusyBiscuit",
@@ -13,6 +13,7 @@
     "electron": "^1.6.11"
   },
   "dependencies": {
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "string-similarity": "^3.0.0"
   }
 }

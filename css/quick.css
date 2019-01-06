@@ -1,0 +1,54 @@
+div {
+    cursor: default;
+}
+.quick-search {
+    font-size: 24px;
+    height: 32px;
+    width: calc(100% - 3px);
+}
+.container_games {
+    overflow-y: scroll;
+}
+.game_object {
+    align-items: center;
+    display: flex;
+    margin-bottom: 1px;
+    margin-top: 1px;
+    user-select:none;
+    width: 100%;
+}
+.game_info_column {
+    float: left;
+    width: 100%;
+}
+.game_thumbnail {
+    margin-right: 4px;
+    overflow: visible;
+    position: relative;
+}
+.game_image_component {
+    position: absolute;
+}
+.game_image {
+    top: 4px;
+}
+.game_button_component {
+    pointer-events: none;
+}
+.game_button_play {
+    color: #FFFFFF;
+    font-size: 125%;
+    margin: auto;
+    margin-top: -28%;
+    pointer-events: none;
+    text-align: center;
+    transform: translateY(-8px);
+    width: 100%;
+    z-index: 10;
+}
+.sorting_thumbnail {
+    margin-left: 12px;
+}
+.clickable {
+    cursor: pointer;
+}

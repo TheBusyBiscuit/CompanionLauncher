@@ -9,6 +9,9 @@
     "summary_games": "%X Games installed",
     "price_none": "Free",
     "button_play": "Play",
+    "search": {
+        "quick-launch": "Search for any game to launch it..."
+    },
     "features": {
         "1": "Multiplayer",
         "2": "Singleplayer",
@@ -52,6 +55,7 @@
         },
         "tray": {
             "showHide": "Show / Hide",
+            "quickLaunch": "Quick-Launcher",
             "quit": "Exit"
         },
         "game": {

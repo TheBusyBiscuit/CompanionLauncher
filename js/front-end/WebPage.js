@@ -1,7 +1,6 @@
 var electron = require('electron');
 var remote = electron.remote;
 var ipcRenderer = electron.ipcRenderer;
-var Menu = electron.Menu;
 
 var thumbnail_size = {
     width: (420 * 9 / 20).toFixed(0),
@@ -498,6 +497,7 @@ function updateCSS() {
         '.sorting_thumbnail { width: ' + thumbnail_size.width + 'px !important; }' +
         '.game_image { width: ' + thumbnail_size.width + 'px !important; }' +
         '.game_object { height: ' + thumbnail_size.height + 'px !important; }' +
+        '.container_games { max-height: ' + thumbnail_size.height * 4 + 'px !important; }' +
         '.game_object { background: #323232; }' +
         '.game_title { color: #f0f0f0; }' +
         '.game_developers { color: #8c8c8c; }' +
